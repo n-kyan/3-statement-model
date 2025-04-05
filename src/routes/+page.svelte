@@ -6,11 +6,13 @@
     import SupportingSchedules from "./supporting_schedules.svelte";
     import Revolver from "./revolver.svelte";
 
+    import IncomeCss from "./income-css.svelte";
+
     import { Button } from 'fuchs';
 
 </script>
-<h1>3 Statement Model</h1>
-<Button>Click</Button>
+
+<IncomeCss></IncomeCss>
 
 
 <div class="first-row">
