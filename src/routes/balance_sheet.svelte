@@ -2,8 +2,10 @@
 
 </script>
 
-<div class="container">
-    <h3>Balance Sheet</h3>
+<div class="table-container">
+    <div class="header">
+        <h3>Balance Sheet</h3>
+    </div>
     <table>
         <thead>
             <tr>
@@ -75,14 +77,4 @@
 </div>
 
 <style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th, td {
-        border: 1px solid #ccc;
-        padding: 8px;
-        text-align: left;
-    }
 </style>

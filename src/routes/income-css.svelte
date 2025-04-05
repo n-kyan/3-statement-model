@@ -1,26 +1,14 @@
 <script lang="ts">
 
     import { getIncomeStatement } from "$lib/true-model.svelte";
+    import { formatNumber } from "$lib/functions";
 
     let incomeStatement = getIncomeStatement();
 
-    function formatCurrency(value:number): string {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        }).format(value)
-    }
     
-    function formatPercent(value: number): string {
-        return new Intl.NumberFormat('en-US', {
-            style: 'percent',
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 1
-        }).format(value);
-    }
 </script>
 
-<div class="container">
+<div class="table-container">
     <div class="header">
         <h3>Income Statement</h3>
     </div>
@@ -41,16 +29,16 @@
                 <tr>
                     <td>Revenue</td>
                     <td></td>
-                    <td>{incomeStatement.revenue[0]}</td>
-                    <td>{incomeStatement.revenue[1]}</td>
-                    <td>{incomeStatement.revenue[2]}</td>
-                    <td>{incomeStatement.revenue[3]}</td>
-                    <td>{incomeStatement.revenue[4]}</td>
+                    <td>{formatNumber(incomeStatement.revenue[0])}</td>
+                    <td>{formatNumber(incomeStatement.revenue[1])}</td>
+                    <td>{formatNumber(incomeStatement.revenue[2])}</td>
+                    <td>{formatNumber(incomeStatement.revenue[3])}</td>
+                    <td>{formatNumber(incomeStatement.revenue[4])}</td>
                 </tr>
                 <tr class="tr-alt">
                     <td>COGS</td>
                     <td></td>
-                    <td>{incomeStatement.cogs[0]}</td>
+                    <td>{formatNumber(incomeStatement.cogs[0])}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -59,7 +47,7 @@
                 <tr>
                     <td>Gross Profit</td>
                     <td></td>
-                    <td>{incomeStatement.grossProfit[0]}</td>
+                    <td>{formatNumber(incomeStatement.grossProfit[0])}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -71,7 +59,7 @@
                 <tr>
                     <td>SG&A</td>
                     <td></td>
-                    <td>{incomeStatement.sga[0]}</td>
+                    <td>{formatNumber(incomeStatement.sga[0])}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -80,7 +68,7 @@
                 <tr class="tr-alt">
                     <td>Depreciation</td>
                     <td></td>
-                    <td>{incomeStatement.depreciation[0]}</td>
+                    <td>{formatNumber(incomeStatement.depreciation[0])}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -89,7 +77,7 @@
                 <tr>
                     <td>Operating Income (EBIT)</td>
                     <td></td>
-                    <td>{incomeStatement.operatingIncome[0]}</td>
+                    <td>{formatNumber(incomeStatement.operatingIncome[0])}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -101,7 +89,7 @@
                 <tr>
                     <td>Interest Expense</td>
                     <td></td>
-                    <td>{incomeStatement.interest[0]}</td>
+                    <td>{formatNumber(incomeStatement.interest[0])}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -110,7 +98,7 @@
                 <tr class="tr-alt">
                     <td>Earnings Before Tax</td>
                     <td></td>
-                    <td>{incomeStatement.earningsBeforeTax[0]}</td>
+                    <td>{formatNumber(incomeStatement.earningsBeforeTax[0])}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -119,7 +107,7 @@
                 <tr>
                     <td>Taxes</td>
                     <td></td>
-                    <td>{incomeStatement.taxes[0]}</td>
+                    <td>{formatNumber(incomeStatement.taxes[0])}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -128,7 +116,7 @@
                 <tr class="tr-bold">
                     <td>Net Income</td>
                     <td></td>
-                    <td>{incomeStatement.netIncome[0]}</td>
+                    <td>{formatNumber(incomeStatement.netIncome[0])}</td>
                     <td></td>
                     <td></td>
                     <td></td>

@@ -1,4 +1,4 @@
-.container {
+  .table-container {
     @apply bg-gray-900 rounded-lg shadow-md overflow-hidden font-mono;
   }
   
@@ -15,15 +15,15 @@
   }
   
   th {
-    @apply px-6 py-3 text-left text-xs font-medium text-blue-400 uppercase tracking-wider;
+    @apply px-1 py-1 text-left text-xs font-medium text-blue-400 uppercase tracking-wider;
   }
   
   tr td {
-    @apply px-6 py-4 whitespace-nowrap text-sm text-blue-200;
+    @apply px-1 py-1 whitespace-nowrap text-sm text-blue-200;
   }
   
   .tr-highlight {
-    @apply px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-100;
+    @apply px-1 py-1 whitespace-nowrap text-sm font-medium text-blue-100;
   }
   
   .tr-bold td {
@@ -37,7 +37,11 @@
   /* .tr-alt td {
     @apply bg-gray-800;
   } */
-  
+
+  input {
+    @apply text-white bg-black
+  }
+
   .positive {
     @apply text-green-400;
   }

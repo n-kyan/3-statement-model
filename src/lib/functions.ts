@@ -30,17 +30,16 @@ export function sumColumns(...rows:number[][]):number[] {
     return sums;
 }
 
-
 export function formatNumber(value: number, decimals: number = 2): string {
     if (value === null || value === undefined) return '';
     
     // Format as currency
-    const formatted = Math.abs(value).toFixed(decimals);
+    const formatted = value.toFixed(decimals);
     
     // Add commas for thousands separator
     const parts = formatted.split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     
     // Add color formatting indicator (could be used with CSS classes)
-    return value >= 0 ? parts.join('.') : '(' + parts.join('.') + ')';
+    return value >= 0 ? parts.join('.') : ('(' + parts.join('.') + ')').replace('-','');
   }
