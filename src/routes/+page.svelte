@@ -12,7 +12,6 @@
 
 </script>
 
-<IncomeCss></IncomeCss>
 
 
 <div class="first-row">

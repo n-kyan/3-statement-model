@@ -1,6 +1,9 @@
 <script lang="ts">
-    import { assumptions, getIncomeStatement } from "$lib/model.svelte";
-    const incomeStatement = getIncomeStatement();
+    import { getIncomeStatement } from "$lib/true-model.svelte";
+    import { getAssumptions } from "$lib/true-model.svelte";
+
+    let incomeStatement = getIncomeStatement();
+    let assumptions = getAssumptions();
 
 </script>
 
@@ -21,7 +24,7 @@
                     <td>Units Sold</td>
                     <td></td>
                     <td>
-                        <input bind:value={assumptions.unitsSold} type="number">
+                        <input bind:value={assumptions.incomeStatement.unitsSold} type="number">
                     </td>
                     <td>%</td>
                 </tr>
@@ -29,35 +32,35 @@
                     <td>Price per Unit</td>
                     <td></td>
                     <td>
-                        <input bind:value={assumptions.pricePerUnit} type="number">
+                        <input bind:value={assumptions.incomeStatement.pricePerUnit} type="number">
                     </td>
                     <td>%</td>
                 </tr>
                 <tr>
                     <td>COGS as % of Revenue</td>
                     <td></td>
-                    <td><input bind:value={assumptions.cogsRate} type="number"></td>
+                    <td><input bind:value={assumptions.incomeStatement.cogsRate} type="number"></td>
                     <td>%</td>
                 </tr>
                 <tr>
                     <td>SG&A as % of Revenue</td>
                     <td></td>
-                    <td><input bind:value={assumptions.sgaRate} type="number"></td>
+                    <td><input bind:value={assumptions.incomeStatement.sgaRate} type="number"></td>
                     <td>%</td>
                 </tr>
                 <tr>
                     <td>Tax Rate</td>
                     <td></td>
-                    <td><input bind:value={assumptions.taxRate} type="number"></td>
+                    <td><input bind:value={assumptions.incomeStatement.taxRate} type="number"></td>
                     <td>%</td>
                 </tr>
                 <tr>
                     <td>Revenue</td>
-                    <td>{incomeStatement.revenue[0]}</td>
+                    <!-- <td>{incomeStatement.revenue[0]}</td> -->
                 </tr>
                 <tr>
                     <td>COGS</td>
-                    <td>{incomeStatement.cogs[0]}</td>
+                    <!-- <td>{incomeStatement.cogs[0]}</td> -->
                 </tr>
             </tbody>
         </table>
@@ -77,7 +80,7 @@
                     <td>Accounts Receivable as % of Revenue</td>
                     <td></td>
                     <td>
-                        <input bind:value={assumptions.arRate} type="number">
+                        <input bind:value={assumptions.balanceSheet.arRate} type="number">
                     </td>
                     <td>%</td>
                 </tr>
@@ -85,26 +88,26 @@
                     <td>Inventory as % of COGS</td>
                     <td></td>
                     <td>
-                        <input bind:value={assumptions.inventoryRate} type="number">
+                        <input bind:value={assumptions.balanceSheet.inventoryRate} type="number">
                     </td>
                     <td>%</td>
                 </tr>
                 <tr>
                     <td>Accounts Payable as % of COGS</td>
                     <td></td>
-                    <td><input bind:value={assumptions.apRate} type="number"></td>
+                    <td><input bind:value={assumptions.balanceSheet.apRate} type="number"></td>
                     <td>%</td>
                 </tr>
                 <tr>
                     <td>Long Term Debt</td>
                     <td></td>
-                    <td><input bind:value={assumptions.longTermDebt} type="number"></td>
+                    <td><input bind:value={assumptions.balanceSheet.longTermDebt} type="number"></td>
                     <td>%</td>
                 </tr>
                 <tr>
                     <td>Interest Expense %</td>
                     <td></td>
-                    <td><input bind:value={assumptions.interestExpenseRate} type="number"></td>
+                    <td><input bind:value={assumptions.balanceSheet.interestExpenseRate} type="number"></td>
                 </tr>
                 <tr>
                     <td>Interest Expense</td>

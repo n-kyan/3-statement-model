@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { getIncomeStatement } from "$lib/model.svelte";
 
-    const incomeStatement = getIncomeStatement();
+    import { getIncomeStatement } from "$lib/true-model.svelte";
+
+    let incomeStatement = getIncomeStatement();
 
     function formatCurrency(value:number): string {
         return new Intl.NumberFormat('en-US', {
@@ -21,7 +22,7 @@
 
 <div class="container">
     <div class="header">
-        <h3 class="text-lg font-medium text-gray-900">Income Statement</h3>
+        <h3>Income Statement</h3>
     </div>
     <div class="overflow-x-auto">
         <table>
@@ -39,99 +40,99 @@
             <tbody>
                 <tr>
                     <td>Revenue</td>
-                    <td class="td-empty"></td>
-                    <td>{formatCurrency(incomeStatement.revenue[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                    <td></td>
+                    <td>{incomeStatement.revenue[0]}</td>
+                    <td>{incomeStatement.revenue[1]}</td>
+                    <td>{incomeStatement.revenue[2]}</td>
+                    <td>{incomeStatement.revenue[3]}</td>
+                    <td>{incomeStatement.revenue[4]}</td>
                 </tr>
                 <tr class="tr-alt">
                     <td>COGS</td>
-                    <td class="td-empty"></td>
-                    <td>{formatCurrency(incomeStatement.cogs[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                    <td></td>
+                    <td>{incomeStatement.cogs[0]}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
-                    <td class="td-highlight">Gross Profit</td>
-                    <td class="td-empty"></td>
-                    <td class="td-highlight">{formatCurrency(incomeStatement.grossProfit[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                    <td>Gross Profit</td>
+                    <td></td>
+                    <td>{incomeStatement.grossProfit[0]}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr class="tr-divider">
                     <td colspan="7"></td>
                 </tr>
                 <tr>
                     <td>SG&A</td>
-                    <td class="td-empty"></td>
-                    <td>{formatCurrency(incomeStatement.sga[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                    <td></td>
+                    <td>{incomeStatement.sga[0]}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr class="tr-alt">
                     <td>Depreciation</td>
-                    <td class="td-empty"></td>
-                    <td>{formatCurrency(incomeStatement.depreciation[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                    <td></td>
+                    <td>{incomeStatement.depreciation[0]}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
-                    <td class="td-highlight">Operating Income (EBIT)</td>
-                    <td class="td-empty"></td>
-                    <td class="td-highlight">{formatCurrency(incomeStatement.operatingIncome[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                    <td>Operating Income (EBIT)</td>
+                    <td></td>
+                    <td>{incomeStatement.operatingIncome[0]}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr class="tr-divider">
                     <td colspan="7"></td>
                 </tr>
                 <tr>
                     <td>Interest Expense</td>
-                    <td class="td-empty"></td>
-                    <td>{formatCurrency(incomeStatement.interest[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                    <td></td>
+                    <td>{incomeStatement.interest[0]}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr class="tr-alt">
-                    <td class="td-highlight">Earnings Before Tax</td>
-                    <td class="td-empty"></td>
-                    <td class="td-highlight">{formatCurrency(incomeStatement.earningsBeforeTax[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                    <td>Earnings Before Tax</td>
+                    <td></td>
+                    <td>{incomeStatement.earningsBeforeTax[0]}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>Taxes</td>
-                    <td class="td-empty"></td>
-                    <td>{formatCurrency(incomeStatement.taxes[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                    <td></td>
+                    <td>{incomeStatement.taxes[0]}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
-                <tr class="tr-alt">
-                    <td class="td-bold">Net Income</td>
-                    <td class="td-empty"></td>
-                    <td class="td-bold">{formatCurrency(incomeStatement.netIncome[0])}</td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
-                    <td class="td-empty"></td>
+                <tr class="tr-bold">
+                    <td>Net Income</td>
+                    <td></td>
+                    <td>{incomeStatement.netIncome[0]}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>

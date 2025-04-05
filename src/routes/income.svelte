@@ -1,7 +1,9 @@
 <script lang="ts">
-    import { getIncomeStatement } from "$lib/model.svelte";
 
-    const incomeStatement = getIncomeStatement();
+    import { getIncomeStatement } from "$lib/true-model.svelte";
+
+    let incomeStatement = getIncomeStatement();
+
 
     function formatCurrency(value:number): string {
         return new Intl.NumberFormat('en-US', {

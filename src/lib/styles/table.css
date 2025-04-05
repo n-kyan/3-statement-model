@@ -18,29 +18,25 @@
     @apply px-6 py-3 text-left text-xs font-medium text-blue-400 uppercase tracking-wider;
   }
   
-  td {
+  tr td {
     @apply px-6 py-4 whitespace-nowrap text-sm text-blue-200;
   }
   
-  .td-empty {
-    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-600;
-  }
-  
-  .td-highlight {
+  .tr-highlight {
     @apply px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-100;
   }
   
-  .td-bold {
-    @apply px-6 py-4 whitespace-nowrap text-sm font-semibold text-white;
+  .tr-bold td {
+    @apply font-semibold text-white;
   }
   
-  .tr-divider {
+  /* .tr-divider {
     @apply h-4 bg-gray-800;
-  }
+  } */
   
-  .tr-alt {
+  /* .tr-alt td {
     @apply bg-gray-800;
-  }
+  } */
   
   .positive {
     @apply text-green-400;

@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { assumptions, getFixedAssets } from "$lib/model.svelte";
-    const fixedAssets = getFixedAssets();
+    import { getAssumptions } from "$lib/true-model.svelte";
+    import { getFixedAssets } from "$lib/true-model.svelte";
+
+    let assumptions = getAssumptions();
+    let fixedAssets = getFixedAssets();
     
-    // Destructure needed values from model for easier access
-    const { capEx, existingAssetUsefulLife, newAssetUsefulLife } = assumptions;
-    const { depreciationMatrix, existingAssetDepreciation, newAssetDepreciation, totalDepreciation, ppeFromPreviousYear, beginningPPE, endingPPE } = fixedAssets;
 </script>
 
 <div class="container">
@@ -29,19 +29,19 @@
                 <td>Capital Expenditure</td>
                 <td></td> <!-- gap -->
                 <td>
-                    <input bind:value={assumptions.capEx[0]} type="number">
+                    <input bind:value={assumptions.fixedAsset.capEx[0]} type="number">
                 </td>
                 <td>
-                    <input bind:value={assumptions.capEx[1]} type="number">
+                    <input bind:value={assumptions.fixedAsset.capEx[1]} type="number">
                 </td>
                 <td>
-                    <input bind:value={assumptions.capEx[2]} type="number">
+                    <input bind:value={assumptions.fixedAsset.capEx[2]} type="number">
                 </td>
                 <td>
-                    <input bind:value={assumptions.capEx[3]} type="number">
+                    <input bind:value={assumptions.fixedAsset.capEx[3]} type="number">
                 </td>
                 <td>
-                    <input bind:value={assumptions.capEx[4]} type="number">
+                    <input bind:value={assumptions.fixedAsset.capEx[4]} type="number">
                 </td>
             </tr>
             <tr>
@@ -50,18 +50,18 @@
             <tr>
                 <td>Existing Assets Useful Life (years)</td> <!-- for assets purchased before forecast period-->
                 <td>
-                    <input bind:value={assumptions.existingAssetUsefulLife} type="number">
+                    <input bind:value={assumptions.fixedAsset.existingAssetUsefulLife} type="number">
                 </td>
             </tr>
             <tr>
                 <td>New Assets Useful Life (years)</td>  <!-- for assets purchased during forecast period-->
                 <td>
-                    <input bind:value={assumptions.newAssetUsefulLife} type="nubmer">
+                    <input bind:value={assumptions.fixedAsset.newAssetUsefulLife} type="nubmer">
                 </td>
             </tr>
             <tr>
                 <td>PPE 2023 EOP</td> <!-- TODO: from balance sheet-->
-                <td>{ppeFromPreviousYear}</td>
+                <td>{assumptions.balanceSheet.ppeFromPreviousYear}</td>
             </tr>
             <tr>
                 <td></td> <!-- gap -->
@@ -77,48 +77,48 @@
             </tr>
             <tr>
                 <td></td>
-                <td>{capEx[0]}</td>
-                <td>{capEx[0] / newAssetUsefulLife}</td>
-                <td>{capEx[0] / newAssetUsefulLife}</td>
-                <td>{capEx[0] / newAssetUsefulLife}</td>
-                <td>{capEx[0] / newAssetUsefulLife}</td>
-                <td>{capEx[0] / newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[0]}</td>
+                <td>{assumptions.fixedAsset.capEx[0] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[0] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[0] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[0] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[0] / assumptions.fixedAsset.newAssetUsefulLife}</td>
             </tr>
             <tr>
                 <td></td>
-                <td>{capEx[1]}</td>
+                <td>{assumptions.fixedAsset.capEx[1]}</td>
                 <td></td>
-                <td>{capEx[1] / newAssetUsefulLife}</td>
-                <td>{capEx[1] / newAssetUsefulLife}</td>
-                <td>{capEx[1] / newAssetUsefulLife}</td>
-                <td>{capEx[1] / newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[1] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[1] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[1] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[1] / assumptions.fixedAsset.newAssetUsefulLife}</td>
             </tr>
             <tr>
                 <td></td>
-                <td>{capEx[2]}</td>
+                <td>{assumptions.fixedAsset.capEx[2]}</td>
                 <td></td>
                 <td></td>
-                <td>{capEx[2] / newAssetUsefulLife}</td>
-                <td>{capEx[2] / newAssetUsefulLife}</td>
-                <td>{capEx[2] / newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[2] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[2] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[2] / assumptions.fixedAsset.newAssetUsefulLife}</td>
             </tr>
             <tr>
                 <td></td>
-                <td>{capEx[3]}</td>
+                <td>{assumptions.fixedAsset.capEx[3]}</td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{capEx[3] / newAssetUsefulLife}</td>
-                <td>{capEx[3] / newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[3] / assumptions.fixedAsset.newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[3] / assumptions.fixedAsset.newAssetUsefulLife}</td>
             </tr>
             <tr>
                 <td></td>
-                <td>{capEx[4]}</td>
+                <td>{assumptions.fixedAsset.capEx[4]}</td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>{capEx[4] / newAssetUsefulLife}</td>
+                <td>{assumptions.fixedAsset.capEx[4] / assumptions.fixedAsset.newAssetUsefulLife}</td>
             </tr>
             <tr>
                 <td></td> <!-- gap -->
@@ -126,29 +126,29 @@
             <tr>
                 <td>Existing Asset Depreciation</td>  <!-- TODO: PPE 2023 / existingAssetUsefulLife (stays constant)-->
                 <td></td>
-                <td>{existingAssetDepreciation[0]}</td>
-                <td>{existingAssetDepreciation[1]}</td>
-                <td>{existingAssetDepreciation[2]}</td>
-                <td>{existingAssetDepreciation[3]}</td>
-                <td>{existingAssetDepreciation[4]}</td>
+                <td>{fixedAssets.existingAssetDepreciation[0]}</td>
+                <td>{fixedAssets.existingAssetDepreciation[1]}</td>
+                <td>{fixedAssets.existingAssetDepreciation[2]}</td>
+                <td>{fixedAssets.existingAssetDepreciation[3]}</td>
+                <td>{fixedAssets.existingAssetDepreciation[4]}</td>
             </tr>
             <tr>
                 <td>New Asset Depreciation</td> <!-- TODO: sum of above column -->
                 <td></td> <!-- gap -->
-                <td>{newAssetDepreciation[0]}</td>
-                <td>{newAssetDepreciation[1]}</td>
-                <td>{newAssetDepreciation[2]}</td>
-                <td>{newAssetDepreciation[3]}</td>
-                <td>{newAssetDepreciation[4]}</td>
+                <td>{fixedAssets.newAssetDepreciation[0]}</td>
+                <td>{fixedAssets.newAssetDepreciation[1]}</td>
+                <td>{fixedAssets.newAssetDepreciation[2]}</td>
+                <td>{fixedAssets.newAssetDepreciation[3]}</td>
+                <td>{fixedAssets.newAssetDepreciation[4]}</td>
             </tr>
             <tr>
                 <td>**Total Depreciation**</td> <!-- TODO: sum of above -->
                 <td></td>
-                <td>{newAssetDepreciation[0] + existingAssetDepreciation[0]}</td>
-                <td>{newAssetDepreciation[1] + existingAssetDepreciation[1]}</td>
-                <td>{newAssetDepreciation[2] + existingAssetDepreciation[2]}</td>
-                <td>{newAssetDepreciation[3] + existingAssetDepreciation[3]}</td>
-                <td>{newAssetDepreciation[4] + existingAssetDepreciation[4]}</td>
+                <td>{fixedAssets.newAssetDepreciation[0] + fixedAssets.existingAssetDepreciation[0]}</td>
+                <td>{fixedAssets.newAssetDepreciation[1] + fixedAssets.existingAssetDepreciation[1]}</td>
+                <td>{fixedAssets.newAssetDepreciation[2] + fixedAssets.existingAssetDepreciation[2]}</td>
+                <td>{fixedAssets.newAssetDepreciation[3] + fixedAssets.existingAssetDepreciation[3]}</td>
+                <td>{fixedAssets.newAssetDepreciation[4] + fixedAssets.existingAssetDepreciation[4]}</td>
             </tr>
             <tr>
                 <td></td> <!-- gap -->
@@ -156,38 +156,38 @@
             <tr>
                 <td>Beginning PPE</td>
                 <td></td>
-                <td>{beginningPPE[0]}</td>
-                <td>{beginningPPE[1]}</td>
-                <td>{beginningPPE[2]}</td>
-                <td>{beginningPPE[3]}</td>
-                <td>{beginningPPE[4]}</td>
+                <td>{fixedAssets.beginningPPE[0]}</td>
+                <td>{fixedAssets.beginningPPE[1]}</td>
+                <td>{fixedAssets.beginningPPE[2]}</td>
+                <td>{fixedAssets.beginningPPE[3]}</td>
+                <td>{fixedAssets.beginningPPE[4]}</td>
             </tr>
             <tr>
                 <td>CapEx</td>
                 <td></td>
-                <td>{capEx[0]}</td>
-                <td>{capEx[1]}</td>
-                <td>{capEx[2]}</td>
-                <td>{capEx[3]}</td>
-                <td>{capEx[4]}</td>
+                <td>{assumptions.fixedAsset.capEx[0]}</td>
+                <td>{assumptions.fixedAsset.capEx[1]}</td>
+                <td>{assumptions.fixedAsset.capEx[2]}</td>
+                <td>{assumptions.fixedAsset.capEx[3]}</td>
+                <td>{assumptions.fixedAsset.capEx[4]}</td>
             </tr>
             <tr>
                 <td>Depreciation</td>
                 <td></td>
-                <td>{totalDepreciation[0]}</td>
-                <td>{totalDepreciation[1]}</td>
-                <td>{totalDepreciation[2]}</td>
-                <td>{totalDepreciation[3]}</td>
-                <td>{totalDepreciation[4]}</td>
+                <td>{fixedAssets.totalDepreciation[0]}</td>
+                <td>{fixedAssets.totalDepreciation[1]}</td>
+                <td>{fixedAssets.totalDepreciation[2]}</td>
+                <td>{fixedAssets.totalDepreciation[3]}</td>
+                <td>{fixedAssets.totalDepreciation[4]}</td>
             </tr>
             <tr>
                 <td>**Ending PPE**</td>
                 <td></td>
-                <td>{endingPPE[0]}</td>
-                <td>{endingPPE[1]}</td>
-                <td>{endingPPE[2]}</td>
-                <td>{endingPPE[3]}</td>
-                <td>{endingPPE[4]}</td>
+                <td>{fixedAssets.endingPPE[0]}</td>
+                <td>{fixedAssets.endingPPE[1]}</td>
+                <td>{fixedAssets.endingPPE[2]}</td>
+                <td>{fixedAssets.endingPPE[3]}</td>
+                <td>{fixedAssets.endingPPE[4]}</td>
             </tr>
             <tr>
                 <td></td> <!-- gap -->
