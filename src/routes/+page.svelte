@@ -33,13 +33,7 @@
 <style>
     .row {
         display: flex;
-        gap: 1rem;
+        gap: 0rem;
         width: 100%;
-    }
-    
-    /* If you want them to have equal width */
-    .row > :global(*) {
-        flex: 1;
-        min-width: 0;
     }
 </style>
