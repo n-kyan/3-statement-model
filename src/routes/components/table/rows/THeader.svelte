@@ -1,9 +1,11 @@
 <script lang='ts'>
 
     const currentYear = new Date().getFullYear();
+    const { numColumns } = $props();
+
     const years:number[] = [];
 
-    for (let i=0; i<5; i++) {
+    for (let i=0; i<numColumns; i++) {
         years[i] = currentYear + i;
     }
     

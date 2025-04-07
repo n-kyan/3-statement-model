@@ -122,9 +122,9 @@ export const assumptions = $state({
     const years = 5;
     const result: number[][] = [];
     for (let i = 0; i < years; i++) {
-      result[i] = [];
+      result[i] = Array(years).fill(0);
       for (let j = 0; j <= i; j++) {
-        result[i][j] = -(capEx[j] / newAssetUsefulLife);
+        result[j][i] = -(capEx[j] / newAssetUsefulLife);
       }
     }
     return result;

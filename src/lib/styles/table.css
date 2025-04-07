@@ -56,7 +56,7 @@
   } */
 
   input {
-    @apply text-white bg-black
+    @apply text-white bg-black w-20
   }
 
   .positive {

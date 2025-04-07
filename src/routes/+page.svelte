@@ -17,15 +17,22 @@
 
 <div class="master">
     <div class="row">
-        <IncStAssumptions/>
-        <Income/>
+        <div>
+            <IncStAssumptions/>
+        </div>
+        <div>
+            <Income/>
+        </div>
     </div>
     <div class="row">
         <!-- <BalShAssumptions/>
         <BalanceSheet/> -->
     </div>
-
-    <!-- <BalShAssumptions/> -->
+    <div class="row">
+        <div>
+            <SupportingSchedules/>
+        </div>
+    </div>
 
 
 </div>
@@ -33,7 +40,7 @@
 <style>
     .row {
         display: flex;
-        gap: rem;
+        gap: 1rem;
         width: 100%;
     }
 </style>

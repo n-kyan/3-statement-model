@@ -1,9 +1,16 @@
 <script lang='ts'>
 
 import { formatNumber } from "$lib/functions";
+import { assumptions } from "$lib/true-model.svelte";
+	import type { Snippet } from "svelte";
+	import { render } from "svelte/server";
 
-let { title, data, bold, clear }:
-{ title:string, data:number[], bold?:boolean, clear:number
+interface InputsObj {
+    assumption : number;
+}
+
+let { title, data, input=$bindable(), bold=false, indented=false, children, clear=0 }:
+{ title:string, data?:number[], input?:number, bold?:boolean, indented?:boolean, children:Snippet, clear?:number
 } = $props()
 
 //temp
@@ -82,10 +89,19 @@ let highlighted = false;
     <td class="icon">
         <img src="/bloomberg-bar-graph.png" alt="icon">
     </td>
-    <td class:indented={!bold}>{title}</td>
-    {#each data as num, i}
-        <td class:highlight={highlighted} id={String(i)}>{formatNumber(num)}</td>
-    {/each}
+    <td class:indented={indented}>{title}</td>
+    {@render children()}
+
+    <!-- {#if data}
+        {#each data as num, i}
+            <td class:highlight={highlighted} id={String(i)}>{formatNumber(num)}</td>
+        {/each}
+    {/if}
+    {#if input !== undefined}
+        <td>
+            <input bind:value={input} type="number">
+        </td>
+    {/if} -->
 </tr>
 
 <style>
@@ -101,9 +117,9 @@ let highlighted = false;
         color: #da9946;
     }
 
-    .highlight {
+    /* .highlight {
         color: red;
-    }
+    } */
 
     /* @keyframes highlight {
         0% {
@@ -116,6 +132,7 @@ let highlighted = false;
 
     td {
         border-right: 1px solid #333;
+        white-space: nowrap;
     }
 
     .indented {

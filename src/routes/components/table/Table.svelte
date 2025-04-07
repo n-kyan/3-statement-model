@@ -29,5 +29,6 @@
     .container {
         background-color: black;
         font-family: 'IBM Plex Mono', monospace;
+        width: fit-content;
     }
   </style>

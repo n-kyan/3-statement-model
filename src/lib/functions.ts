@@ -1,4 +1,4 @@
-export function sumColumns(...rows:number[][]):number[] {
+export function _sumColumns(...rows:number[][]):number[] {
 
     const firstLength = rows[0].length;
     let allSameLength = true;
@@ -30,6 +30,25 @@ export function sumColumns(...rows:number[][]):number[] {
     return sums;
 }
 
+export function sumColumns(data: number[][]): number[] {
+    console.log(data)
+    if (data.length === 0) return [];
+    
+    const numCols = data[0].length;
+    const sums: number[] = new Array(numCols).fill(0);
+    
+    for (let row = 0; row < data.length; row++) {
+      if (data[row].length !== numCols) {
+        throw new Error('All rows must have the same length');
+      }
+      
+      for (let col = 0; col < numCols; col++) {
+        sums[col] += data[row][col];
+      }
+    }
+    
+    return sums;
+  }
 export function formatNumber(value: number, decimals: number = 2): string {
     if (value === null || value === undefined) return '';
     
