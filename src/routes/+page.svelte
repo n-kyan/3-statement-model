@@ -1,4 +1,5 @@
  <script lang="ts">
+    import Income from "./components/income.svelte";
     import BalanceSheet from "./components/balance_sheet.svelte";
     import CashflowStatement from "./components/cash_flow.svelte";
     import IncStAssumptions from "./components/incStAssumptions.svelte";
@@ -6,9 +7,9 @@
     import SupportingSchedules from "./components/supporting_schedules.svelte";
     import Revolver from "./components/revolver.svelte";
 
-    import Income from "./components/income.svelte";
 
     import { Button } from 'fuchs';
+
 
 </script>
 
@@ -20,8 +21,8 @@
         <Income/>
     </div>
     <div class="row">
-        <BalShAssumptions/>
-        <BalanceSheet/>
+        <!-- <BalShAssumptions/>
+        <BalanceSheet/> -->
     </div>
 
     <!-- <BalShAssumptions/> -->

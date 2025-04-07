@@ -1,30 +1,30 @@
   /* on chanege color #dd9c42 */
   
-  .table-container {
+  /* table {
     @apply bg-black shadow-md overflow-hidden font-mono text-base tracking-tight antialiased;
-  }
+  } */
   
-  .header {
+  /* .header {
     @apply px-0 py-0 bg-[#a8a8a8] border-b border-gray-700;
-  }
+  } */
   
-  .header h3 {
+  /* .header h3 {
     @apply text-sm font-medium text-[#051028];
-  }
+  } */
   
-  table {
+  /* table {
     @apply min-w-full divide-y divide-gray-700;
   }
   
   th {
     @apply px-1 py-1 text-left text-xs font-medium text-[#d9d2d4] uppercase tracking-wider bg-[#272727];
-  }
+  } */
   
-  tr td {
+  /* tr td {
     @apply px-1 py-1 whitespace-nowrap text-sm text-[#efd9a4];
-  }
+  } */
 
-  td.indented {
+  /* td.indented {
     padding-left: 20px;
   }
 
@@ -45,7 +45,7 @@
   
   .tr-bold td {
     @apply text-[#da9946];
-  }
+  } */
   
   /* .tr-divider {
     @apply h-4 bg-gray-800;
@@ -67,11 +67,11 @@
     @apply text-red-400;
   }
 
-  table td, table th {
-    border-right: 1px solid #333; /* Adjust color to match your design */
-  }
+  /* table td, table th {
+    border-right: 1px solid #333;
+  } */
   
   /* Remove border from the last cell in each row */
-    table td:last-child, table th:last-child {
+    /* table td:last-child, table th:last-child {
     border-right: none;
-  }
+  } */
