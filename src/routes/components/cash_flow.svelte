@@ -1,85 +1,107 @@
 <script lang="ts">
+	import Table from "./table/Table.svelte";
+    import TRow from "./table/rows/TRow.svelte";
+    import THeader from "./table/rows/THeader.svelte";
+
+    import { assumptions, getCashFlowStatement, getFixedAssets, getIncomeStatement } from "$lib/true-model.svelte";
+	import { formatNumber } from "$lib/functions";
+
+    let fixedAssets = getFixedAssets();
+    let incomeStatement = getIncomeStatement();
+    let cashFlowStatement = getCashFlowStatement();
+
 
 </script>
 
-<div class="container">
-    <h3>Cash Flow Statement</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Figures in USD millions</th>
-                <th></th> <!-- gap -->
-                <th>current year and season</th>
-                <th>+1 year</th>
-                <th>+1 year</th>
-                <th>+1 year</th>
-                <th>+1 year</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Net Income</td>
-            </tr>
-            <tr>
-                <td>Depreciation</td>
-            </tr>
-            <tr>
-                <td>Change in Accounts Reveivable</td>
-            </tr>
-            <tr>
-                <td>Change in Inventory</td>
-            </tr>
-            <tr>
-                <td>Change in Accounts Payable</td>
-            </tr>
-            <tr>
-                <td>**Cash Flow From Operating Activities**</td>
-            </tr>
-            <tr></tr> <!-- gap -->
-            <tr>
-                <td>Capital Expenditures</td>
-            </tr>
-            <tr>
-                <td>**Cash Flow from Investing Activities**</td>
-            </tr>
-            <tr>
-                <td>Change in Long Term Debt</td>
-            </tr>
-            <tr>
-                <td>Change in Revolver</td>
-            </tr>
-            <tr>
-                <td>Chanfe in Common Stock</td>
-            </tr>
-            <tr>
-                <td>Dividends</td>
-            </tr>
-            <tr>
-                <td>**Cash Flow from Financing Activities**</td>
-            </tr>
-            <tr></tr> <!-- gap -->
-            <tr>
-                <td>Beginning of Year Cash Balance</td>
-            </tr>
-            <tr>
-                <td>**Change in Cash**</td>
-            </tr>
-            <tr>
-                <td>End of Year Cash Balance</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    th, td {
-        border: 1px solid #ccc;
-        padding: 8px;
-        text-align: left;
-    }
-</style>
+<Table title="CASH FLOW STATEMENT">
+    {#snippet header()}
+        <THeader numColumns={6}/>
+    {/snippet}
+    {#snippet rows()}
+        <TRow title="Net Income" bold={true}>
+            {#each incomeStatement.netIncome as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="+ Depreciation" indented={true}>
+            {#each fixedAssets.totalDepreciation as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="+/- Change in AR" indented={true}>
+            {#each cashFlowStatement.changeAr as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="+/- Change in Inventory" indented={true}>
+            {#each cashFlowStatement.changeInventory as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="+/- Change in AP" indented={true}>
+            {#each cashFlowStatement.changeAP as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Cash Flow from Operations" bold={true}>
+            {#each cashFlowStatement.cashFromOps as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="- Capital Expenditure" indented={true}>
+            {#each assumptions.fixedAsset.capEx as num}
+                <td>{formatNumber(-num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Cash Flow from Investing" bold={true}>
+            {#each cashFlowStatement.cashFromInvesting as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="+/- Change in Long Term Debt" indented={true}>
+            {#each cashFlowStatement.changeLongTermDebt as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="+/- Change in Revolver" indented={true}>
+            {#each cashFlowStatement.changeRevolver as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="+/- Change In Common Stock" indented={true}>
+            {#each cashFlowStatement.changeComStock as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="- Dividends" indented={true}>
+            {#each assumptions.retainedEarnings.dividends as num}
+                <td>{formatNumber(-num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Cash Flow from Financing" bold={true}>
+            {#each cashFlowStatement.cashFromFinancing as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="BOY Cash Balance" bold={true}>
+            {#each cashFlowStatement.cashBalances.beginningCashBal as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="+/- Change in Cash" indented={true}>
+            {#each cashFlowStatement.changeCash as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="EOY Cash Balance" bold={true}>
+            {#each cashFlowStatement.cashBalances.endingCashBal as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <!-- <TRow title="">
+            {#each cashFlowStatement. as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow> -->
+    {/snippet}
+</Table>

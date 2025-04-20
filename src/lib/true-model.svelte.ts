@@ -1,5 +1,6 @@
 // financial-model.svelte.ts
 // Centralized model combining all four files with optimized reactivity
+import { sumColumns } from "./functions";
 
 // Model State - Single source of truth
 export const assumptions = $state({
@@ -28,12 +29,24 @@ export const assumptions = $state({
     },
     
     balanceSheet: {
-      ppeFromPreviousYear: 48990,
+      ppeFromPreviousYear: 20000,
       arRate: 0,
       inventoryRate: 0,
       apRate: 0,
       longTermDebt: 40000,
-      interestExpenseRate: 0.07
+      interestExpenseRate: 0.07,
+      
+      startingCash: 1000,
+      startingAR: 800,
+      startingInventory: 700,
+      startingPPE: 20000,
+      startingAP: 900,
+      startingComStock: 15000,
+      startingRetainedEarnings: 600
+    },
+
+    retainedEarnings: {
+      dividends: [10000, 12500, 15000, 20000, 25000].map(num => -num)
     }
   });
   
@@ -183,7 +196,6 @@ export const assumptions = $state({
   });
   
   // =========== INCOME STATEMENT ===========
-  // From income-statement.svelte.ts
   
   let revenue = $derived.by(() => {
     const years = 5;
@@ -265,6 +277,168 @@ export const assumptions = $state({
     }
     return result;
   });
+
+  // =========== RETAINED EARNINGS ===========
+
+  let retainedEarnings = $derived.by(() => {
+    let results = [];
+    const years = 5;
+
+    results[0] = assumptions.balanceSheet.startingRetainedEarnings;
+    for (let i=1; i<years; i++) {
+      results[i] = results[i-1] + netIncome[i] + assumptions.retainedEarnings.dividends[i];
+    }
+    return results;
+  })
+
+
+  // =========== BALANCE SHEET ===========
+
+  let startingTotalCurrAss = $derived(assumptions.balanceSheet.startingCash + assumptions.balanceSheet.startingAR + assumptions.balanceSheet.startingInventory)
+  
+  let startingTotalAss = $derived(startingTotalCurrAss + assumptions.balanceSheet.startingPPE)
+  
+  let startingTotalCurLia = $derived(assumptions.balanceSheet.startingAP)
+  
+  let startingTotalLia = $derived(startingTotalCurLia + assumptions.balanceSheet.longTermDebt)
+  
+  let startingShaHolEq = $derived(assumptions.balanceSheet.startingComStock + assumptions.balanceSheet.startingRetainedEarnings)
+  
+  let startingTotalLiaEq = $derived(startingShaHolEq + startingTotalLia);
+  
+  // cash from cash flow statement
+
+  let accountsReceivable = $derived.by(() => {
+    let result = []
+    const years = 5
+
+    result[0] = assumptions.balanceSheet.startingAR
+    for (let i=0; i<years; i++) {
+      result[i+1] = revenue[i]*assumptions.balanceSheet.arRate
+    }
+    return result;
+  })
+
+  let inventory = $derived.by(() => {
+    let result = []
+    const years = 5
+
+    result[0] = assumptions.balanceSheet.startingInventory
+    for (let i=0; i<years; i++) {
+      result[i+1] = cogs[i]*assumptions.balanceSheet.inventoryRate
+    }
+    return result;
+  })
+
+  // had to move totalCurrAss down below the CF Statement cashflow statements to fix error of cash not being assigned
+  
+  let ppe = $derived.by(() => {
+    let results = []
+    const years = 5
+    results[0] = assumptions.balanceSheet.startingPPE
+    results[1] = results[0]
+    
+    for (let i=2; i<years; i++) {
+      results[i] = results[i-1] + assumptions.fixedAsset.capEx[i] + totalDepreciation[i]
+    }
+    return results;
+  })
+
+  // had to move totalAss down below the CF Statement cashflow statements to fix error of totalCurrAss not being assigned
+
+  let accountsPayable = $derived.by(() => {
+    let result = []
+    const years = 5
+
+    result[0] = assumptions.balanceSheet.startingAP
+    for (let i=0; i<years; i++) {
+      result[i+1] = cogs[i]*assumptions.balanceSheet.apRate
+    }
+    return result;
+  })
+
+  let revolver = $derived([0,0,0,0,0]) // TODO:
+
+  let totalCurrLia = $derived(sumColumns([accountsPayable])) // add revolver
+
+  let longTermDebt = $derived(longTermDebtProjs)
+
+  let totalLiabilities = $derived(sumColumns([totalCurrLia, longTermDebt]))
+
+  let commonStock = $derived(Array(6).fill(assumptions.balanceSheet.startingComStock))
+
+  // retained earnings from retained earnings schedule
+
+  let totalShaEq = $derived(sumColumns([commonStock, retainedEarnings]))
+
+  let totalLiaEq = $derived(sumColumns([totalShaEq, totalLiabilities]))
+
+
+  // =========== CASH FLOW STATEMENT ===========
+
+  function findChangeIn(data:number[], negate:boolean=false){
+    let results = []
+    const years = 5;
+
+    for (let i=1; i<years+1; i++){
+      results[i] = data[i] - data[i-1];
+    }
+    if (!negate){
+      return results;
+    } else {
+      return results.map(num => -num);
+    }
+  }
+
+  // Net Income from income statement
+
+  // Depreciation as a positive number from fixed asset schedule
+
+  let changeAR = $derived(findChangeIn(accountsReceivable, true))
+
+  let changeInventory = $derived(findChangeIn(inventory, true))
+
+  let changeAP = $derived(findChangeIn(accountsPayable))
+
+  let cashFromOps = $derived(sumColumns([changeAR, changeInventory, changeAP]))
+
+  // CapEx from fixed assets as a negative number
+
+  let cashFromInvesting = $derived(assumptions.fixedAsset.capEx.map(num => -num))
+
+  let changeLongTermDebt = $derived(findChangeIn(longTermDebt))
+
+  let changeRevolver = $derived([0,0,0,0,0])
+
+  let changeComStock = $derived(findChangeIn(commonStock))
+
+  // Dividends from retained earnings assumptions
+
+  let cashFromFinancing = $derived(sumColumns([changeLongTermDebt, changeRevolver, changeComStock, assumptions.retainedEarnings.dividends]));
+  
+  let changeCash = $derived(sumColumns([cashFromOps, cashFromInvesting, cashFromFinancing]));
+
+  let cashBalances = $derived.by(() => {
+    let beginningCashBal = [];
+    let endingCashBal = [];
+    const years = 5;
+
+    beginningCashBal[0] = assumptions.balanceSheet.startingCash;
+
+    for (let i=1; i<years+1; i++) {
+      endingCashBal[i-1] = beginningCashBal[i-1] + changeCash[i]
+      beginningCashBal[i] = endingCashBal[i-1]
+
+    }
+    return {beginningCashBal, endingCashBal}
+  })
+
+  // =========== BALANCE SHEET CONT. ===========
+
+  let totalCurrAss = $derived(sumColumns([cashBalances.endingCashBal, accountsReceivable, inventory]))
+
+  let totalAssets = $derived(sumColumns([totalCurrAss, ppe]))
+
   
   // =========== EXPORTED GETTERS ===========
   // These functions provide access to the reactive state
@@ -308,6 +482,48 @@ export const assumptions = $state({
       get taxes() { return taxes; },
       get netIncome() { return netIncome; }
     };
+  }
+
+  // Return Retained Earnings
+  export function getRetainedEarnings() {
+    return retainedEarnings;
+  }
+
+  // Return Balance Sheet
+  export function getBalanceSheet() {
+    return{
+      get accountsReceivable() {return accountsReceivable},
+      get inventory() {return inventory},
+      get totalCurrAss() {return totalCurrAss},
+      get ppe() {return ppe},
+      get totalAssets() {return totalAssets},
+      get accountsPayable() {return accountsPayable},
+      get revolver() {return revolver},
+      get totalCurrLia() {return totalCurrLia},
+      get longTermDebt() {return longTermDebt},
+      get totalLiabilities() {return totalLiabilities},
+      get commonStock() {return commonStock},
+      get totalShaEq() {return totalShaEq},
+      get totalLiaEq() {return totalLiaEq},
+    }
+  }
+
+  // Return Cash Flow Statement
+  export function getCashFlowStatement() {
+    return{
+      get changeAr() {return changeAR},
+      get changeInventory() {return changeInventory},
+      get changeAP() {return changeAP},
+      get cashFromOps() {return cashFromOps},
+      get cashFromInvesting() {return cashFromInvesting},
+      get changeLongTermDebt() {return changeLongTermDebt},
+      get changeRevolver() {return changeRevolver},
+      get changeComStock() {return changeComStock},
+      get cashFromFinancing() {return totalLiabilities},
+      get commonStock() {return commonStock},
+      get changeCash() {return changeCash},
+      get cashBalances() {return cashBalances},
+    }
   }
   
   // Get assumptions

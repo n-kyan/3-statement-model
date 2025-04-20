@@ -1,80 +1,91 @@
 <script lang="ts">
+    import Table from "./table/Table.svelte";
+    import TRow from "./table/rows/TRow.svelte";
+    import THeader from "./table/rows/THeader.svelte";
+    import { formatNumber } from "$lib/functions";
+
+	import { getBalanceSheet, getCashFlowStatement, getRetainedEarnings } from "$lib/true-model.svelte";
+
+    let balanceSheet = getBalanceSheet();
+    let cashFlowStatement = getCashFlowStatement();
+    let retainedEarnings = getRetainedEarnings();
 
 </script>
 
-<div class="table-container">
-    <div class="header">
-        <h3>Balance Sheet</h3>
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Figures in USD millions</th>
-                <th>previous year</th> <!-- gap -->
-                <th>current year and season2025F</th>
-                <th>+1 year</th>
-                <th>+1 year</th>
-                <th>+1 year</th>
-                <th>+1 year</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Cash & Cash Equivalents</td>
-            </tr>
-            <tr>
-                <td>Accounts Receivable</td>
-            </tr>
-            <tr>
-                <td>Inventory</td>
-            </tr>
-            <tr>
-                <td>**Total Current Assets**</td>
-            </tr>
-            <tr></tr> <!-- gap -->
-            <tr>
-                <td>Property Plant & Equipment (PPE)</td> <!-- Selling, general and administrative expenses -->
-            </tr>
-            <tr>
-                <td>**Total Assets**</td>
-            </tr>
-            <tr></tr> <!-- gap -->
-            <tr>
-                <td>Accounts Payable</td>
-            </tr>
-            <tr>
-                <td>Revolver</td>
-            </tr>
-            <tr>
-                <td>**Total Current Liabilities**</td>
-            </tr>
-            <tr>
-                <td>Long Term Debt</td>
-            </tr>
-            <tr>
-                <td>**Total Liabilities**</td>
-            </tr>
-            <tr></tr> <!-- gap -->
-            <tr>
-                <td>Common Stock</td>
-            </tr>
-            <tr>
-                <td>Retained Earnings</td>
-            </tr>
-            <tr>
-                <td>**Total Shareholder's Equity</td>
-            </tr>
-            <tr></tr> <!-- gap -->
-            <tr>
-                <td>**Total Liabilities & Equity</td>
-            </tr>
-            <tr></tr> <!-- gap -->
-            <tr>
-                <td>Balance Sheet Check</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<style>
-</style>
+<Table title={"Balance Sheet"}>
+    {#snippet header()}
+        <THeader numColumns={6}/>
+    {/snippet}
+    {#snippet rows()}
+        <TRow title="Cash & Cash Equivalents">
+            {#each cashFlowStatement.cashBalances.endingCashBal as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Accounts Receivable">
+            {#each balanceSheet.accountsReceivable as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Inventory">
+            {#each balanceSheet.inventory as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Total Current Assets" bold={true}>
+            {#each balanceSheet.totalCurrAss as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Propperty Plant & Equipment">
+            {#each balanceSheet.ppe as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Total Assets" bold={true}>
+            {#each balanceSheet.totalAssets as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Accounts Payable">
+            {#each balanceSheet.accountsPayable as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Revolver">
+            {#each balanceSheet.revolver as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Total Current Liabilities" bold={true}>
+            {#each balanceSheet.totalCurrLia as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Common Stock">
+            {#each balanceSheet.commonStock as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Retained Earnings" bold={true}>
+            {#each retainedEarnings as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Total Shareholder's Equity" bold={true}>
+            {#each balanceSheet.totalShaEq as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Total Liabilities and Equity">
+            {#each balanceSheet.totalLiaEq as num}
+                <td>{formatNumber(num)}</td>
+            {/each}
+        </TRow>
+        <TRow title="Balance Sheet Check">
+            {#each [0,1,2,3,4] as i}
+                <td>{formatNumber(balanceSheet.totalAssets[i] - balanceSheet.totalLiaEq[i])}</td>
+            {/each}
+        </TRow>
+    {/snippet}
+</Table>

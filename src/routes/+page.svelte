@@ -9,6 +9,7 @@
 
 
     import { Button } from 'fuchs';
+	import CashFlow from "./components/cash_flow.svelte";
 
 
 </script>
@@ -25,13 +26,16 @@
         </div>
     </div>
     <div class="row">
-        <!-- <BalShAssumptions/>
-        <BalanceSheet/> -->
-    </div>
-    <div class="row">
         <div>
             <SupportingSchedules/>
         </div>
+    </div>
+    <div class="row">
+        <BalShAssumptions/>
+        <BalanceSheet/>
+    </div>
+    <div class="row">
+        <CashFlow/>
     </div>
 
 

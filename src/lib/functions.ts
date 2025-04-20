@@ -34,12 +34,18 @@ export function sumColumns(data: number[][]): number[] {
     console.log(data)
     if (data.length === 0) return [];
     
-    const numCols = data[0].length;
+    let numCols = data[0].length;
+    for (let row = 1; row < data.length; row++) {
+      if (data.length > numCols) {
+        numCols = data.length
+      }
+    }
     const sums: number[] = new Array(numCols).fill(0);
     
     for (let row = 0; row < data.length; row++) {
-      if (data[row].length !== numCols) {
-        throw new Error('All rows must have the same length');
+      while (data[row].length < numCols) {
+        data[row] = [0].concat(data[row])
+        console.log("beep")
       }
       
       for (let col = 0; col < numCols; col++) {
